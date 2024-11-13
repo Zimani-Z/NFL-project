@@ -1,0 +1,21 @@
+def calculate_win_probability(is_home, wins, losses, avg_points_scored):
+    probability = 0.5
+
+    # home advantage
+    if is_home:
+        probability *= 1.54
+    
+    total_games = wins + losses
+    win_percentage = wins / total_games if total_games > 0 else 0
+
+   
+    if win_percentage >= 0.5:
+        probability *= (1 + (win_percentage - 0.5))  # boost for better win rates
+    else:
+        # Losing record reduce the probability
+        probability *= max(0.9, win_percentage)
+        probability = min(probability, 0.45)
+    
+    # probability between 0 and 1
+    probability = min(max(probability, 0), 1)
+    return probability * 100 
