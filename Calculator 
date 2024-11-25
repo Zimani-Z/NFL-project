@@ -18,4 +18,28 @@ def calculate_win_probability(is_home, wins, losses, avg_points_scored):
     
     # probability between 0 and 1
     probability = min(max(probability, 0), 1)
-    return probability * 100 
+    return probability * 100  # Return as a percent
+
+def predict_score(points_scored_last_10, win_percentage):
+     # Calculate the average points over the last 10 games
+    avg_points_scored = sum(points_scored_last_10) / len(points_scored_last_10)
+
+
+   # Adjust predicted score based on win percentage
+    if win_percentage >= 0.5:
+        avg_points_scored *= (1 + (win_percentage - 0.5))  # Small boost for better win rates
+    else:
+        avg_points_scored *= win_percentage  # Scale down if losing record
+  
+    return int(avg_points_scored)
+
+def predict_game_outcome(team1_stats, team2_stats):
+    # Calculate average points for each team
+    team1_avg_scored = sum(team1_stats['points_scored_last_10']) / len(team1_stats['points_scored_last_10'])
+    team2_avg_scored = sum(team2_stats['points_scored_last_10']) / len(team2_stats['points_scored_last_10'])
+
+
+   # Calculate win percentage for each team
+    team1_win_percentage = team1_stats['wins'] / (team1_stats['wins'] + team1_stats['losses']) if (team1_stats['wins'] + team1_stats['losses']) > 0 else 0
+    team2_win_percentage = team2_stats['wins'] / (team2_stats['wins'] + team2_stats['losses']) if (team2_stats['wins'] + team2_stats['losses']) > 0 else 0
+
