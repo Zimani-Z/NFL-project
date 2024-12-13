@@ -1,7 +1,11 @@
-from flask import Flask, request, jsonify
-from your_calculator_modoule import predict_game_outcome
+from flask import Flask, jsonify, request
+from Calculator import predict_game_outcome
 
 app = Flask(__name__)
+@app.route('/')
+def home():
+    return 'Welcome to the NFL Prediction App!'
+
 
 @app.route('/predict', methods=['POST'])
 def predict():
