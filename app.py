@@ -1,10 +1,10 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, render_template, request
 from Calculator import predict_game_outcome
 
 app = Flask(__name__)
 @app.route('/')
 def home():
-    return 'Welcome to the NFL Prediction App!'
+    return render_template('index.html') 
 
 
 @app.route('/predict', methods=['POST'])
@@ -26,4 +26,4 @@ def predict():
     return jsonify(result)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5002)
